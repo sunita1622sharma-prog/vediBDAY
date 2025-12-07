@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Vedii ✨</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Pacifico&family=Poppins:wght@300;600&display=swap');
+
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.15);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+            height: 100vh;
+            width: 100vw;
+            background: black;
+            color: white;
+        }
+
+        /* --- BACKGROUND --- */
+        #bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2070&auto=format&fit=crop') no-repeat center center/cover;
+            z-index: -2;
+            filter: brightness(0.8);
+        }
+
+        /* --- FALLING ITEMS --- */
+        .falling-item {
+            position: absolute;
+            top: -50px;
+            user-select: none;
+            pointer-events: none;
+            z-index: 1;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(360deg); }
+        }
+
+        /* --- INTRO INTERFACE --- */
+        #interface {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            border: var(--glass-border);
+            padding: 40px;
+            border-radius: 25px;
+            text-align: center;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            width: 90%;
+            max-width: 450px;
+            animation: floatCard 3s ease-in-out infinite;
+        }
+
+        @keyframes floatCard {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h1 {
+            font-family: 'Pacifico', cursive;
+            color: #ff9ff3;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        p { font-size: 1.1rem; margin-bottom: 20px; }
+
+        input {
+            width: 80%;
+            padding: 15px;
+            border-radius: 50px;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            text-align: center;
+            margin-bottom: 20px;
+            background: rgba(255,255,255,0.9);
+            color: #333;
+        }
+
+        .btn {
+            padding: 12px 40px;
+            background: linear-gradient(45deg, #ff9ff3, #feca57);
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover { transform: scale(1.1); box-shadow: 0 0 15px #ff9ff3; }
+        .hidden { display: none; }
+
+        /* --- MAIN SCENE --- */
+        #main-scene {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        #signature {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-family: 'Indie Flower', cursive;
+            font-size: 1.5rem;
+            color: rgba(255,255,255,0.8);
+            z-index: 50;
+        }
+
+        /* --- POSITIVE LINES TEXT --- */
+        #message-box {
+            position: absolute;
+            top: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            text-align: center;
+            font-family: 'Indie Flower', cursive;
+            font-size: 2rem;
+            color: #fff;
+            text-shadow: 0 0 10px #ff9ff3;
+            z-index: 10;
+            height: 100px;
+            pointer-events: none;
+        }
+
+        /* --- TABLE AREA --- */
+        .table-container {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90vw;
+            height: 40vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            z-index: 20;
+        }
+
+        .table-surface {
+            width: 100%;
+            max-width: 900px;
+            height: 120px;
+            background: url('https://images.unsplash.com/photo-1516962215378-7fa2e137ae91?q=80&w=2574&auto=format&fit=crop'); /* Wood texture */
+            background-size: cover;
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.8);
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            padding-bottom: 20px;
+        }
+
+        /* --- ITEMS ON TABLE --- */
+        
+        /* Photo Frame */
+        .frame {
+            width: 180px;
+            height: 220px;
+            background: #eee;
+            border: 8px solid #4a3b2c;
+            border-radius: 5px;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
+            position: relative;
+            bottom: 40px;
+            overflow: hidden;
+            transform: rotate(-3deg);
+        }
+        .frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Cake */
+        .cake-wrapper {
+            position: relative;
+            bottom: 30px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .cake-wrapper:hover { transform: scale(1.05); }
+        .cake-wrapper:active { transform: scale(0.95); }
+        
+        .cake-img {
+            width: 280px;
+            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.6));
+        }
+
+        /* Coffee Cups */
+        .coffee-group {
+            display: flex;
+            gap: 20px; /* Space between cups */
+            position: relative;
+            bottom: 10px;
+        }
+        .coffee-img {
+            width: 90px;
+            height: auto;
+            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.4));
+        }
+
+        /* --- BALLOONS --- */
+        .real-balloon {
+            position: absolute;
+            width: 90px;
+            bottom: -150px;
+            z-index: 100;
+            cursor: crosshair;
+            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
+            transition: transform 0.1s;
+            animation: floatUp linear forwards;
+        }
+
+        @keyframes floatUp {
+            to { bottom: 120vh; }
+        }
+
+        /* --- YOUTUBE HIDDEN --- */
+        #player {
+            position: absolute;
+            top: -200%;
+            left: -200%;
+            visibility: hidden;
+        }
+        
+        /* Mobile adjustments */
+        @media (max-width: 768px) {
+            .table-surface { width: 100vw; height: 100px; }
+            .frame { width: 100px; height: 120px; bottom: 20px; }
+            .cake-img { width: 160px; }
+            .coffee-img { width: 60px; }
+            h1 { font-size: 1.8rem; }
+            #message-box { font-size: 1.3rem; top: 12%; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Background -->
+    <div id="bg-image"></div>
+
+    <!-- YouTube Audio Embed -->
+    <div id="player"></div>
+
+    <!-- Interface / Quiz -->
+    <div id="interface">
+        
+        <!-- Q1 -->
+        <div id="step1" class="card">
+            <h1>Birthday Check! ✨</h1>
+            <p>Who is the Birthday Girl?</p>
+            <input type="text" id="nameInput" placeholder="Her Name...">
+            <br>
+            <button class="btn" onclick="checkName()">Next</button>
+        </div>
+
+        <!-- Q2 -->
+        <div id="step2" class="card hidden">
+            <h1>When is the party? 🎂</h1>
+            <p>Enter the special date:</p>
+            <input type="date" id="dateInput">
+            <br>
+            <button class="btn" onclick="nextStep(2)">Next</button>
+        </div>
+
+        <!-- Q3 -->
+        <div id="step3" class="card hidden">
+            <h1>The Creator? 🧐</h1>
+            <p>Who is the special man who made this for her?</p>
+            <input type="text" id="creatorInput" placeholder="His Name...">
+            <br>
+            <button class="btn" onclick="checkCreator()">Next</button>
+        </div>
+
+        <!-- Q4 -->
+        <div id="step4" class="card hidden">
+            <h1>Yummy Stuff 😋</h1>
+            <p>What's your favorite thing to eat?</p>
+            <input type="text" id="foodInput" placeholder="e.g. Pizza, Sushi...">
+            <br>
+            <button class="btn" onclick="nextStep(4)">Next</button>
+        </div>
+
+        <!-- Q5 Custom -->
+        <div id="step5" class="card hidden">
+            <h1>Gamer Check 🎮</h1>
+            <p>What is the best game ever?</p>
+            <input type="text" id="gameInput" value="Roblox" readonly style="cursor: not-allowed; background: #eee; color: #888;">
+            <br>
+            <small>(I already know the answer)</small><br><br>
+            <button class="btn" onclick="startSurprise()">START SURPRISE</button>
+        </div>
+    </div>
+
+    <!-- Main Scene -->
+    <div id="main-scene">
+        <div id="signature">Made by varunnnnnn</div>
+
+        <!-- Rotating Messages -->
+        <div id="message-box">Loading Happiness...</div>
+
+        <!-- Table -->
+        <div class="table-container">
+            <div class="table-surface">
+                
+                <!-- Real Frame with Cats -->
+                <div class="frame">
+                    <!-- Using a collage placeholder of cats -->
+                    <img src="https://images.unsplash.com/photo-1513245543132-31f507417b26?q=80&w=1935&auto=format&fit=crop" alt="Cute Cats">
+                </div>
+
+                <!-- Real Cake -->
+                <div class="cake-wrapper" onclick="eatCake()">
+                    <!-- Transparent PNG of chocolate cake -->
+                    <img src="https://pngimg.com/d/chocolate_cake_PNG42.png" alt="Chocolate Cake" class="cake-img">
+                </div>
+
+                <!-- 2 Cups of Coffee (Reliable Links) -->
+                <div class="coffee-group">
+                    <!-- Cup 1 -->
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/A_small_cup_of_coffee.JPG/600px-A_small_cup_of_coffee.JPG" 
+                         style="border-radius: 50%; border: 3px solid white;" class="coffee-img" alt="Coffee 1">
+                    
+                    <!-- Cup 2 (Slightly smaller to look natural) -->
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/A_small_cup_of_coffee.JPG/600px-A_small_cup_of_coffee.JPG" 
+                         style="border-radius: 50%; border: 3px solid white; transform: scale(0.9);" class="coffee-img" alt="Coffee 2">
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // --- CONFIGURATION ---
+        let playerName = "";
+        let favoriteFood = "";
+        let messageInterval;
+        
+        // --- YOUTUBE API ---
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '100',
+                width: '100',
+                // Video ID for "Duvet by Boa" (1 Hour Loop version to prevent stopping)
+                videoId: 'hpjUKWl4hH0', 
+                playerVars: {
+                    'playsinline': 1,
+                    'controls': 0,
+                    'autoplay': 0, 
+                    'loop': 1,
+                    'playlist': 'hpjUKWl4hH0' 
+                },
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            // Player is ready, waiting for interaction
+        }
+
+        // --- FALLING ANIMATION ---
+        function createFallingItems() {
+            const items = ['✨', '🎈', '🎮', '☕', '🧁', '🍰', '⭐'];
+            const container = document.body;
+            
+            setInterval(() => {
+                if(document.getElementById('main-scene').style.display === 'block') {
+                    const el = document.createElement('div');
+                    el.classList.add('falling-item');
+                    el.innerText = items[Math.floor(Math.random() * items.length)];
+                    el.style.left = Math.random() * 100 + 'vw';
+                    el.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                    el.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                    container.appendChild(el);
+                    
+                    setTimeout(() => el.remove(), 6000);
+                }
+            }, 300);
+        }
+        createFallingItems();
+
+        // --- QUIZ LOGIC ---
+        function checkName() {
+            const val = document.getElementById('nameInput').value.trim().toLowerCase();
+            if(val === 'vedii') {
+                playerName = "Vedii";
+                nextStep(1);
+            } else {
+                alert("Uh oh! This surprise is reserved for my best friend Vedii only! 🔒");
+            }
+        }
+
+        function checkCreator() {
+            const val = document.getElementById('creatorInput').value.trim().toLowerCase();
+            if(val.includes('varun')) {
+                nextStep(3);
+            } else {
+                alert("Wrong! Think about your best friend! 🤨");
+            }
+        }
+
+        function nextStep(current) {
+            document.getElementById(`step${current}`).classList.add('hidden');
+            document.getElementById(`step${current+1}`).classList.remove('hidden');
+        }
+
+        // --- MAIN START ---
+        function startSurprise() {
+            favoriteFood = document.getElementById('foodInput').value || "Chocolate";
+            
+            // Hide Interface
+            const ui = document.getElementById('interface');
+            ui.style.opacity = '0';
+            setTimeout(() => ui.style.display = 'none', 1000);
+
+            // Show Scene
+            document.getElementById('main-scene').style.display = 'block';
+
+            // Play Music
+            if(player && player.playVideo) {
+                player.setVolume(70);
+                player.playVideo();
+            }
+
+            // Start Message Cycle
+            startMessages();
+            
+            // Start Balloons
+            startRealBalloons();
+        }
+
+        // --- MESSAGES ---
+        function startMessages() {
+            const messages = [
+                `Happy Birthday Vedii! 🎉`,
+                `You are the absolute Roblox Queen! 👑`,
+                `I hope you get infinite ${favoriteFood} today! 🍫`,
+                `"And you don't seem to understand..." 🎶`,
+                `Thanks for being the bestest friend ever! 👯‍♀️`,
+                `May your ping be low and frames be high! 🎮`,
+                `You deserve all the happiness in the world! ✨`,
+                `Look at the kitties! They say hi! 🐱`,
+                `Don't forget to eat the cake! (Click it!) 🎂`,
+                `Made with lots of effort by Varunnnnnn 😎`
+            ];
+            let i = 0;
+            const box = document.getElementById('message-box');
+            
+            // Initial
+            box.innerText = messages[0];
+
+            messageInterval = setInterval(() => {
+                i = (i + 1) % messages.length;
+                box.style.opacity = 0;
+                setTimeout(() => {
+                    box.innerText = messages[i];
+                    box.style.opacity = 1;
+                }, 500);
+            }, 4000);
+        }
+
+        // --- INTERACTIVE ELEMENTS ---
+
+        function eatCake() {
+            const cake = document.querySelector('.cake-img');
+            cake.style.transition = "0.5s";
+            cake.style.transform = "scale(0) rotate(20deg)";
+            cake.style.opacity = "0";
+            
+            // Show text feedback
+            const box = document.getElementById('message-box');
+            box.innerText = "Yum! Saved you a slice! 🍰";
+            
+            // Respawn cake after 5 seconds
+            setTimeout(() => {
+                cake.style.transform = "scale(1) rotate(0deg)";
+                cake.style.opacity = "1";
+                box.innerText = "The magic cake reappeared! 😲";
+            }, 5000);
+        }
+
+        // --- REAL BALLOONS & SOUND ---
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playPoopSound() {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            
+            // A lower frequency "squishy" sound mixed with a pop
+            osc.type = 'sawtooth'; 
+            osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.15);
+            
+            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.2);
+        }
+
+        function startRealBalloons() {
+            // URL for a realistic balloon PNG with transparent background
+            const balloonUrl = "https://pngimg.com/d/balloon_PNG4963.png"; 
+            
+            setInterval(() => {
+                const b = document.createElement('img');
+                b.src = balloonUrl;
+                b.classList.add('real-balloon');
+                b.style.left = Math.random() * 90 + 'vw';
+                
+                // Random Hue rotate to make different colors from one image
+                const hue = Math.floor(Math.random() * 360);
+                b.style.filter = `hue-rotate(${hue}deg) drop-shadow(2px 4px 6px rgba(0,0,0,0.3))`;
+                
+                // Speed
+                const duration = Math.random() * 5 + 6;
+                b.style.animationDuration = duration + 's';
+
+                // Double Click Event
+                b.addEventListener('dblclick', () => {
+                    playPoopSound();
+                    
+                    // Pop visual effect
+                    b.style.transition = "0.05s";
+                    b.style.transform = "scale(1.5)";
+                    b.style.opacity = "0";
+                    
+                    setTimeout(() => b.remove(), 100);
+                });
+
+                document.getElementById('main-scene').appendChild(b);
+                
+                // Cleanup
+                setTimeout(() => { if(b.parentNode) b.remove(); }, duration * 1000);
+            }, 800);
+        }
+
+    </script>
+</body>
+</html>
